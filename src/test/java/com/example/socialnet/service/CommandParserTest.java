@@ -1,6 +1,7 @@
 package com.example.socialnet.service;
 
 import com.example.socialnet.model.Command;
+import com.example.socialnet.model.UserMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

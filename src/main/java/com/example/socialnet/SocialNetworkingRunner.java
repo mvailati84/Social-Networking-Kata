@@ -1,6 +1,7 @@
 package com.example.socialnet;
 
 import com.example.socialnet.model.Command;
+import com.example.socialnet.service.CommandExecutor;
 import com.example.socialnet.service.CommandParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -13,14 +14,16 @@ import java.util.Scanner;
 public class SocialNetworkingRunner implements CommandLineRunner {
 
     final CommandParser parser;
+    final CommandExecutor executor;
 
-    public SocialNetworkingRunner(CommandParser parser) {
+    public SocialNetworkingRunner(CommandParser parser, CommandExecutor executor) {
         this.parser = parser;
+        this.executor = executor;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Social Networking starts with args " + String.join(",", args));
+        log.info("Social Networking starts " + String.join(",", args));
 
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()){
@@ -29,6 +32,9 @@ public class SocialNetworkingRunner implements CommandLineRunner {
             if (command.isExit()){
                 System.exit(0);
             }
+
+            String output = executor.execute(command);
+            log.info(output);
         }
 
     }
