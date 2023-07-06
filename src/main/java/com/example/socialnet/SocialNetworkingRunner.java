@@ -24,7 +24,7 @@ public class SocialNetworkingRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Social Networking starts " + String.join(",", args));
+        log.info("Starting Social Networking using " + String.join(",", args));
 
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()){
