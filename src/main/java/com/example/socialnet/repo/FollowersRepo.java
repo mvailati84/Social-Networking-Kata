@@ -4,21 +4,20 @@ import com.example.socialnet.model.Follower;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 @Repository
 public class FollowersRepo {
 
-    HashMap<String, Follower> followers;
+    HashMap<String, Follower> followers = new HashMap<>();
 
-    public Follower user(String user) {
+    public Follower findByUser(String user) {
         Follower out = followers.get(user);
 
         if (out == null){
             out = new Follower(user);
-            followers.put(user, out);
         }
+
+        followers.put(user, out);
 
         return out;
     }

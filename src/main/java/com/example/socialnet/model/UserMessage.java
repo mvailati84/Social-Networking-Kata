@@ -21,8 +21,12 @@ public class UserMessage {
     private final String message;
     private final long time = System.currentTimeMillis();
 
-    public String print(){
+    public String printMessage(){
         return message + " " + printElapsed();
+    }
+
+    public String printMessageWithUserName(){
+        return username + " - " + printMessage();
     }
 
     private String printElapsed() {

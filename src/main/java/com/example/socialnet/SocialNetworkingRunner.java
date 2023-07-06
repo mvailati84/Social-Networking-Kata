@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -33,8 +34,8 @@ public class SocialNetworkingRunner implements CommandLineRunner {
                 System.exit(0);
             }
 
-            String output = executor.execute(command);
-            log.info(output);
+            List<String> output = executor.execute(command);
+            output.forEach(s -> log.info(s));
         }
 
     }

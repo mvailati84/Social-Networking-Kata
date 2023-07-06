@@ -1,19 +1,18 @@
 package com.example.socialnet.service;
 
 import com.example.socialnet.model.Command;
-import com.example.socialnet.repo.FollowersRepo;
 import com.example.socialnet.model.UserMessage;
+import com.example.socialnet.repo.FollowersRepo;
 import com.example.socialnet.repo.UserMessageRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CommandExecutor {
 
-    public static final String EMPTY = "";
     private final UserMessageRepo msgRepo;
     private final FollowersRepo followersRepo;
 
@@ -23,7 +22,7 @@ public class CommandExecutor {
         this.followersRepo = followers;
     }
 
-    public String execute(Command command) {
+    public List<String> execute(Command command) {
         switch (command.getType()) {
             case POSTING:
                 return post(command.getUsername(), command.getMessage());
@@ -34,35 +33,33 @@ public class CommandExecutor {
             case WALL:
                 return wall(command.getUsername());
             default:
-                return EMPTY;
+                return Collections.emptyList();
         }
     }
 
-    private String wall(String username) {
-        Collection<String> userList = followersRepo.user(username).getFollowing();
+    private List<String> wall(String username) {
+        Collection<String> userList = followersRepo.findByUser(username).getFollowing();
         userList.add(username);
 
-        return printMessages(msgRepo.findByUsernameContainingOrderByTimeDesc(userList));
+        return msgRepo.findByUsernameInOrderByTimeDesc(userList).stream()
+                .map(UserMessage::printMessageWithUserName)
+                .toList();
     }
 
-    private String follow(String username, String userToFollow) {
-        followersRepo.user(username).follows(userToFollow);
-        return EMPTY;
+    private List<String> follow(String username, String userToFollow) {
+        followersRepo.findByUser(username).follows(userToFollow);
+        return Collections.emptyList();
     }
 
-    private String read(String user) {
-        return printMessages(msgRepo.findByUsernameOrderByTimeDesc(user));
+    private List<String> read(String user) {
+        return msgRepo.findByUsernameOrderByTimeDesc(user).stream()
+                .map(UserMessage::printMessage)
+                .toList();
     }
 
-    private static String printMessages(List<UserMessage> messages) {
-        return messages.stream()
-                .map(UserMessage::print)
-                .collect(Collectors.joining("\n"));
-    }
-
-    private String post(String user, String message) {
+    private List<String> post(String user, String message) {
         msgRepo.save(new UserMessage(user, message));
-        return EMPTY;
+        return Collections.emptyList();
     }
 
 }
