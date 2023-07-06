@@ -8,6 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 public interface UserMessageRepo extends CrudRepository<UserMessage, Long> {
-    List<UserMessage> findByUsernameOrderByTimeDesc(String user);
-    List<UserMessage> findByUsernameInOrderByTimeDesc(Collection<String> following);
+    List<UserMessage> findByUsernameOrderByIdDesc(String user);
+    List<UserMessage> findByUsernameInOrderByIdDesc(Collection<String> following);
 }

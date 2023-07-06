@@ -41,7 +41,7 @@ public class CommandExecutor {
         Collection<String> userList = followersRepo.findByUser(username).getFollowing();
         userList.add(username);
 
-        return msgRepo.findByUsernameInOrderByTimeDesc(userList).stream()
+        return msgRepo.findByUsernameInOrderByIdDesc(userList).stream()
                 .map(UserMessage::printMessageWithUserName)
                 .toList();
     }
@@ -52,7 +52,7 @@ public class CommandExecutor {
     }
 
     private List<String> read(String user) {
-        return msgRepo.findByUsernameOrderByTimeDesc(user).stream()
+        return msgRepo.findByUsernameOrderByIdDesc(user).stream()
                 .map(UserMessage::printMessage)
                 .toList();
     }
