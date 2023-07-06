@@ -19,7 +19,7 @@ public class UserMessage {
     private Long id;
     private final String username;
     private final String message;
-    private final long time = System.currentTimeMillis();
+    private long time = System.currentTimeMillis();
 
     public String printMessage(){
         return message + " " + printElapsed();
@@ -35,15 +35,17 @@ public class UserMessage {
         if (elapsed < A_SECOND){
             return "(less than 1 second ago)";
         }else if (elapsed < A_MINUTE){
-            return printElapsedTime(elapsed, A_MINUTE, "minute");
+            return printElapsedTime(elapsed, A_SECOND, "second");
         } else if (elapsed < AN_HOUR) {
+            return printElapsedTime(elapsed, A_MINUTE, "minute");
+        } else if (elapsed < A_DAY) {
             return printElapsedTime(elapsed, AN_HOUR, "hour");
         }
         return printElapsedTime(elapsed, A_DAY, "day");
     }
 
     private String printElapsedTime(long elapsed, double timeUnit, String timeLabel) {
-        double minutesElapsed = elapsed / timeUnit;
+        long minutesElapsed = Math.round(elapsed / timeUnit);
         return "(" + minutesElapsed + " " + timeLabel + plural(minutesElapsed) + " ago)";
     }
 
