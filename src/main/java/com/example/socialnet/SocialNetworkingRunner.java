@@ -23,6 +23,7 @@ public class SocialNetworkingRunner implements CommandLineRunner {
     }
 
     @Override
+    @SuppressWarnings("squid:S106")
     public void run(String... args) throws Exception {
         log.info("Starting Social Networking using " + String.join(",", args));
 
@@ -35,7 +36,7 @@ public class SocialNetworkingRunner implements CommandLineRunner {
             }
 
             List<String> output = executor.execute(command);
-            output.forEach(s -> log.info(s));
+            output.forEach(System.out::println);
         }
 
     }
