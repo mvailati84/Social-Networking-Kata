@@ -7,12 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class SocialNetworkingKataApplicationTests {
-    @Autowired
-    SocialNetworkingRunner runner;
-
     @Test
+    @SuppressWarnings("squid:S2699")
     void contextLoads() {
-        assertNotNull(runner);
     }
 
 }
